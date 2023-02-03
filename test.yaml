@@ -1,0 +1,18 @@
+{
+    # Global options block. Entirely optional, https is on by default
+    # Optional email key for lets encrypt
+    email jasonhumphrey@gmail.com 
+    # Optional staging lets encrypt for testing. Comment out for production.
+     acme_ca https://acme-staging-v02.api.letsencrypt.org/directory
+acme_dns porkbun {
+    api_key pk1_2d7d25efb810c419efc21a82a701031d280e15f17adc9f2438a3ad8c3aa7e993
+    api_secret_key sk1_1680e215838b9737e8d9388598a13f16241535b421bb08600d0201b93b476e8b
+}
+
+}
+
+https:// {
+  log
+  reverse_proxy * 172.25.0.100:${PHOENIX_PORT:-13000}
+  ${TLS_OPTS:-}
+}

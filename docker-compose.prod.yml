@@ -18,23 +18,26 @@ version: '3.7'
 
 services:
   caddy:
-    image: caddy:2
+    image: erri120/docker-caddy-porkbun:latest
     volumes:
-      - ${FZ_INSTALL_DIR:-.}/caddy:/data/caddy
+      # - ${FZ_INSTALL_DIR:-.}/caddy:/data/caddy
+      - ${FZ_INSTALL_DIR:-.}/caddy/Caddyfile:/etc/caddy/Caddyfile
+      - ${FZ_INSTALL_DIR:-.}/caddy/data:/data # Optional
+      - ${FZ_INSTALL_DIR:-.}/caddy/config:/config # Optional
     # See Caddy's documentation for customizing this line
     # https://caddyserver.com/docs/quick-starts/reverse-proxy
-    command:
-      - /bin/sh
-      - -c
-      - |
-        cat <<EOF > /etc/caddy/Caddyfile && caddy run --config /etc/caddy/Caddyfile
+    # command:
+    #   - /bin/sh
+    #   - -c
+    #   - |
+    #     cat <<EOF > /etc/caddy/Caddyfile && caddy run --config /etc/caddy/Caddyfile
 
-        https:// {
-          log
-          reverse_proxy * 172.25.0.100:${PHOENIX_PORT:-13000}
-          ${TLS_OPTS:-}
-        }
-        EOF
+    #     https:// {
+    #       log
+    #       reverse_proxy * 172.25.0.100:${PHOENIX_PORT:-13000}
+    #       ${TLS_OPTS:-}
+    #     }
+    #     EOF
     network_mode: "host"
     deploy:
       <<: *default-deploy
